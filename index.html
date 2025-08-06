@@ -59,11 +59,12 @@
             <button class="filter-btn" data-filter="Python">Python</button>
             <button class="filter-btn" data-filter="Machine Learning">Machine Learning</button>
         </div>
-        <div class="project-cards">
-            <!-- Projects will be dynamically inserted here -->
+        <div class="project-carousel-wrapper">
+            <div class="project-cards">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
         </div>
-        <button id="show-more-btn">Show More</button>
-        <p id="remaining-projects-text"></p>
+        <!-- Removed show-more-btn and remaining-projects-text -->
     </section>
 
     <section id="contact" class="fade-in">
@@ -130,7 +131,9 @@
                     <option></option>
                 </select>
                 <button type="button" id="add-college-btn" class="link-btn">My college is not listed</button>
-                <input type="text" name="department" placeholder="Your Department" required>
+                <select id="department-select" name="department" required style="width: 100%;">
+                    <option></option>
+                </select>
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email" required>
                 <input type="tel" name="phone" placeholder="Your Phone Number" required>
