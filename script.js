@@ -59,6 +59,63 @@ document.addEventListener('DOMContentLoaded', () => {
         allowClear: true
     });
 
+    // --- DEPARTMENTS --- //
+    const departments = [
+        "Computer Science and Engineering",
+        "Information Technology",
+        "Electronics and Communication Engineering",
+        "Electrical and Electronics Engineering",
+        "Mechanical Engineering",
+        "Civil Engineering",
+        "Automobile Engineering",
+        "Chemical Engineering",
+        "Biotechnology",
+        "Agricultural Engineering",
+        "Aerospace Engineering",
+        "Mechatronics Engineering",
+        "Computer Science (B.Sc./M.Sc.)",
+        "Information Technology (B.Sc./M.Sc.)",
+        "Mathematics",
+        "Physics",
+        "Chemistry",
+        "Botany",
+        "Zoology",
+        "English Literature",
+        "Tamil Literature",
+        "Economics",
+        "Commerce",
+        "Business Administration",
+        "Visual Communication",
+        "Journalism and Mass Communication",
+        "Social Work",
+        "Psychology",
+        "History",
+        "Political Science",
+        "Public Administration",
+        "Hotel Management",
+        "Catering Science and Hotel Management",
+        "Fashion Technology",
+        "Textile Technology",
+        "Computer Engineering (Polytechnic)",
+        "Electrical Engineering (Polytechnic)",
+        "Mechanical Engineering (Polytechnic)",
+        "Civil Engineering (Polytechnic)",
+        "Electronics Engineering (Polytechnic)",
+        "Automobile Engineering (Polytechnic)",
+        "Chemical Engineering (Polytechnic)",
+        "Agricultural Technology (Polytechnic)",
+        "Applied Science",
+        "General Studies"
+    ];
+    const departmentSelect = $('#department-select');
+    departments.forEach(dept => {
+        departmentSelect.append(new Option(dept, dept));
+    });
+    departmentSelect.select2({
+        placeholder: "Select your department",
+        allowClear: true
+    });
+
     // --- SKILLS --- //
     const skills = {
         'Network Security': ['VLANs', 'OSPF', 'ACLs', 'VPN', 'IDS/IPS', 'Wireshark', 'Nmap'],
@@ -226,26 +283,22 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Text-to-Image Generator', category: 'Machine Learning', tech: 'Python, GANs, Deep Learning', description: 'Generates images from textual descriptions using generative AI models.' }
     ];
     const projectsContainer = document.querySelector('.project-cards');
-    const showMoreBtn = document.querySelector('#show-more-btn');
+    const showMoreBtn = document.querySelector('#show-more-btn'); // This is now hidden by CSS
     const filterButtons = document.querySelectorAll('.filter-btn');
-    const remainingProjectsText = document.getElementById('remaining-projects-text');
-    let itemsToShow = 6;
+    const remainingProjectsText = document.getElementById('remaining-projects-text'); // This is now hidden by CSS
+    let itemsToShow = projects.length; // Show all projects for horizontal scroll
     let currentFilter = 'all';
 
     function updateRemainingProjectsText(filteredCount) {
-        const remaining = filteredCount - itemsToShow;
-        if (remaining > 0) {
-            remainingProjectsText.textContent = `(${remaining} more projects)`;
-        } else {
-            remainingProjectsText.textContent = '';
-        }
+        // This function is no longer actively used for display due to horizontal scroll
+        remainingProjectsText.textContent = ''; 
     }
 
     function renderProjects() {
         projectsContainer.innerHTML = '';
         const filteredProjects = projects.filter(project => currentFilter === 'all' || project.category === currentFilter);
 
-        filteredProjects.slice(0, itemsToShow).forEach(project => {
+        filteredProjects.forEach(project => {
             const card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `
@@ -259,21 +312,18 @@ document.addEventListener('DOMContentLoaded', () => {
             projectsContainer.appendChild(card);
         });
 
-        showMoreBtn.style.display = itemsToShow >= filteredProjects.length ? 'none' : 'block';
+        // showMoreBtn.style.display is no longer needed as all are shown
         updateRemainingProjectsText(filteredProjects.length);
     }
 
-    showMoreBtn.addEventListener('click', () => {
-        itemsToShow += 6;
-        renderProjects();
-    });
+    // showMoreBtn.addEventListener is no longer needed
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
             currentFilter = button.dataset.filter;
-            itemsToShow = 6;
+            // itemsToShow is no longer reset, all are shown
             renderProjects();
         });
     });
@@ -306,6 +356,7 @@ document.addEventListener('DOMContentLoaded', () => {
         bookingMessage.textContent = '';
         bookingForm.reset();
         collegeSelect.val(null).trigger('change');
+        departmentSelect.val(null).trigger('change'); // Clear department selection
         bookingModal.style.display = 'block';
     }
 
@@ -315,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const projectTitle = document.getElementById('booking-project-title').value;
         const college = document.getElementById('college-select').value;
-        const department = e.target.department.value;
+        const department = document.getElementById('department-select').value; // Get value from select
         const submitButton = e.target.querySelector('button[type="submit"]');
 
         submitButton.textContent = 'Checking...';
@@ -345,6 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bookingMessage.style.color = 'green';
                     bookingForm.reset();
                     collegeSelect.val(null).trigger('change');
+                    departmentSelect.val(null).trigger('change'); // Clear department selection
                 } else {
                     throw new Error('Booking failed to save.');
                 }
