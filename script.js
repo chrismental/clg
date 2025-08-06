@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL'; // REMEMBER TO REPLACE THIS!
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyD0OIulKKhHg2ATZj83WqlAIQGexOO9jbJLukKh9sZrVAB3itA_nVBZ9OuO_YKhAHR/exec'; // REMEMBER TO REPLACE THIS!
 
     // --- COLLEGES --- //
     const colleges = {
