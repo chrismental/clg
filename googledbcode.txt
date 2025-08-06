@@ -1,0 +1,90 @@
+function doGet(e) {
+  // This function handles GET requests.
+  // It checks which action the website wants to perform.
+  const action = e.parameter.action;
+  
+  if (action === 'check') {
+    // If the action is 'check', it runs the function to check for an existing booking.
+    return checkBooking(e);
+  } else if (action === 'addCollege') {
+    // If the action is 'addCollege', it runs the function to save a new college suggestion.
+    return addCollege(e);
+  }
+}
+
+function checkBooking(e) {
+  // This function checks if a project is already booked for a specific college/department.
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bookings');
+  const projectTitle = e.parameter.ProjectTitle;
+  const college = e.parameter.College;
+  const department = e.parameter.Department;
+
+  const data = sheet.getDataRange().getValues();
+  let responseData = { exists: false }; // Assume it doesn't exist initially.
+
+  // Loop through all the rows in the 'Bookings' sheet.
+  for (let i = 1; i < data.length; i++) {
+    // Check if the project title, college, AND department match an existing row.
+    if (data[i][0] == projectTitle && data[i][1] == college && data[i][2] == department) {
+      responseData.exists = true; // If a match is found, set 'exists' to true.
+      break; // Stop searching.
+    }
+  }
+  
+  // Send the result back to the website as a JSON object.
+  return ContentService.createTextOutput(JSON.stringify(responseData))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function addCollege(e) {
+  // This function adds a new college name to the 'SuggestedColleges' sheet.
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('SuggestedColleges');
+  const collegeName = e.parameter.collegeName;
+  
+  sheet.appendRow([collegeName]); // Add the new college name in a new row.
+  
+  // Send a success message back to the website.
+  return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  // This function handles POST requests, which are used to save new bookings.
+  
+  // !!! IMPORTANT: Change this to your actual email address !!!
+  const emailForNotifications = "your-email@example.com";
+
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Bookings');
+  const params = e.parameter;
+  
+  // Create a new row with all the booking details from the form.
+  const newRow = [ 
+    params.projectTitle, 
+    params.college,
+    params.department,
+    params.name,
+    params.email,
+    params.phone,
+    new Date() // Adds the current date and time as a timestamp.
+  ];
+  
+  sheet.appendRow(newRow); // Add the new booking to the 'Bookings' sheet.
+  
+  // --- Send Email Notification ---
+  const subject = "New Project Booking: " + params.projectTitle;
+  const body = 
+    "A new project has been booked!\n\n" +
+    "Project: " + params.projectTitle + "\n" +
+    "College: " + params.college + "\n" +
+    "Department: " + params.department + "\n" +
+    "Name: " + params.name + "\n" +
+    "Email: " + params.email + "\n" +
+    "Phone: " + params.phone;
+    
+  // Send the email to the address you configured above.
+  MailApp.sendEmail(emailForNotifications, subject, body);
+  
+  // Send a success message back to the website.
+  return ContentService.createTextOutput(JSON.stringify({ status: 'success' }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
