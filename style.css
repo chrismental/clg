@@ -82,27 +82,98 @@ section {
     max-width: 1100px;
     margin: 0 auto;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    border-radius: 10px; /* Rounded corners for sections */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Subtle shadow for sections */
+    margin-bottom: 3rem; /* Space between sections */
 }
 
+/* Animation Keyframes */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Animation Classes */
+.animate-slide-in-up {
+    animation: slideInUp 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.8s ease-out forwards;
+}
+
+/* Initial states for animations */
+section:not(.visible) {
+    opacity: 0;
+    transform: translateY(50px); /* Default for slide-in-up */
+}
+
+.about-photo-container:not(.visible) .about-photo {
+    opacity: 0;
+    transform: scale(0.8); /* Default for scale-in */
+}
+
+/* Apply animations when visible */
 section.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
+.about-photo-container.visible .about-photo {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
 /* Hero Section */
 #hero {
     background-color: var(--color-dark-bg);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 40vh;
+    min-height: 60vh; /* Increased height for more impact */
     padding: 4rem 1rem;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
+    position: relative; /* For pseudo-element */
+    overflow: hidden; /* Hide overflow from pseudo-element */
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3); /* Dark overlay */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
 }
 
 @keyframes gradient {
@@ -112,19 +183,337 @@ section.visible {
 }
 
 .hero-content h1 {
-    font-size: 4.5rem;
+    font-size: 4.8rem; /* Slightly larger */
     font-weight: 800;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem; /* Increased margin */
     color: var(--color-primary);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    text-shadow: 0 4px 8px rgba(0,0,0,0.4); /* Stronger shadow */
+    letter-spacing: 2px; /* Added letter spacing */
 }
 
 .hero-content p {
-    font-size: 1.8rem;
+    font-size: 2rem; /* Slightly larger */
     font-weight: 300;
     color: var(--color-text-light);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Stronger shadow */
 }
+
+.btn {
+    display: inline-block;
+    background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    color: var(--color-dark-bg);
+    padding: 1rem 2rem; /* Larger padding */
+    text-decoration: none;
+    border-radius: 50px;
+    margin-top: 2rem; /* Increased margin */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.5s ease; /* Added background-position transition */
+    font-weight: 700; /* Bolder text */
+    border: none;
+    cursor: pointer;
+    background-size: 200% auto; /* For gradient animation */
+}
+
+.btn:hover {
+    transform: translateY(-5px); /* More pronounced lift */
+    box-shadow: 0 15px 30px rgba(0,255,247,0.4); /* Stronger shadow */
+    background-position: right center; /* Move gradient on hover */
+}
+
+.link-btn {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin: 0.5rem 0;
+    transition: color 0.3s ease;
+}
+
+.link-btn:hover {
+    color: var(--color-secondary);
+}
+
+/* General Section Styling for depth */
+section {
+    padding: 6rem 1rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    border-radius: 10px; /* Rounded corners for sections */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Subtle shadow for sections */
+    margin-bottom: 3rem; /* Space between sections */
+}
+
+section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Skills Section */
+#skills {
+    background-color: var(--color-dark-bg);
+    padding: 3rem 1rem; /* Adjusted padding */
+}
+
+.skill-category {
+    background-color: var(--color-dark-alt);
+    padding: 2rem; /* Increased padding */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3); /* Stronger shadow */
+    border: 1px solid rgba(0,255,247,0.1); /* Subtle border */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-category:hover {
+    transform: translateY(-8px); /* Lift on hover */
+    box-shadow: 0 15px 40px rgba(0,255,247,0.4); /* More intense shadow on hover */
+}
+
+.skill-category h3 {
+    color: var(--color-secondary);
+    margin-top: 0;
+    font-size: 1.6rem; /* Larger skill category titles */
+}
+
+.skill-item {
+    background-color: #2a2a3e;
+    color: var(--color-text-light);
+    padding: 0.6rem 1.2rem; /* Larger padding */
+    border-radius: 25px; /* More rounded pills */
+    font-size: 1rem; /* Slightly larger font */
+    border: 1px solid rgba(255,255,255,0.1); /* Subtle border */
+}
+
+/* Projects Section */
+#projects {
+    background-color: var(--color-dark-alt);
+    padding: 3rem 1rem; /* Adjusted padding */
+}
+
+.project-carousel-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1.5rem; /* More space for scrollbar */
+}
+
+.project-cards {
+    display: flex;
+    gap: 2rem; /* Increased gap between cards */
+    padding: 0.5rem;
+    scroll-snap-align: start;
+}
+
+.card {
+    flex: 0 0 320px; /* Slightly wider cards */
+    background-color: var(--color-dark-bg);
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3); /* Stronger shadow */
+    padding: 2rem; /* Increased padding */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    scroll-snap-align: start;
+    border: 1px solid rgba(0,255,247,0.1); /* Subtle border */
+}
+
+.card:hover {
+    transform: translateY(-8px); /* Lift on hover */
+    box-shadow: 0 15px 40px rgba(0,255,247,0.4); /* More intense shadow on hover */
+}
+
+.card h3 {
+    margin-top: 0;
+    color: var(--color-secondary);
+    font-size: 1.8rem; /* Larger project titles */
+}
+
+.category {
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-bottom: 1.2rem; /* Increased margin */
+    font-size: 1rem;
+}
+
+.learn-more-btn {
+    background-image: linear-gradient(to right, var(--color-secondary), var(--color-primary)); /* Reversed gradient for contrast */
+    color: var(--color-dark-bg);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    margin-top: 1.5rem; /* Increased margin */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.5s ease;
+    background-size: 200% auto;
+    border: none;
+    cursor: pointer;
+}
+
+.learn-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(26,182,255,0.3); /* Shadow based on secondary color */
+    background-position: right center;
+}
+
+/* Contact Form & Booking Form */
+#contact, #contact-form, #booking-form, #add-college-form {
+    background-color: var(--color-dark-bg);
+    color: var(--color-text-light);
+    padding: 2rem; /* Increased padding */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3); /* Stronger shadow */
+}
+
+#contact-form input, #contact-form textarea, #booking-form input, #booking-form select, #add-college-form input {
+    padding: 1.2rem; /* Larger padding */
+    border: 1px solid #3a3a50;
+    border-radius: 8px; /* More rounded inputs */
+    font-size: 1.1rem; /* Larger font */
+    background-color: #2a2a3e;
+    color: var(--color-text-light);
+    margin-bottom: 1rem; /* Space between inputs */
+    width: calc(100% - 2.4rem); /* Adjust width for padding */
+}
+
+#contact-form textarea {
+    min-height: 150px; /* Taller textarea */
+}
+
+#contact-form input::placeholder, #contact-form textarea::placeholder, #booking-form input::placeholder, #add-college-form input::placeholder {
+    color: #aaa; /* Lighter placeholder text */
+}
+
+/* Modal */
+.modal-content {
+    background-color: var(--color-dark-bg);
+    color: var(--color-text-light);
+    margin: 8% auto; /* Adjusted margin */
+    padding: 2rem; /* Increased padding */
+    border: 1px solid #3a3a50;
+    width: 90%;
+    max-width: 650px; /* Slightly wider modal */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 10px 30px rgba(0,255,247,0.3); /* Stronger shadow */
+}
+
+.services-included {
+    margin-top: 2rem; /* Increased margin */
+    background-color: #2a2a3e;
+    padding: 1.5rem; /* Increased padding */
+    border-radius: 8px;
+    border: 1px solid #3a3a50;
+}
+
+.services-included h4 {
+    margin-top: 0;
+    color: var(--color-primary);
+    font-size: 1.3rem; /* Larger title */
+}
+
+.services-included li {
+    margin-bottom: 0.8rem; /* More space between list items */
+    font-size: 1.05rem;
+}
+
+/* Select2 Dropdown */
+.select2-container .select2-selection--single {
+    height: 55px !important; /* Taller dropdown */
+    padding: 0.9rem 0.8rem !important; /* Adjusted padding */
+    background-color: #2a2a3e !important;
+    border: 1px solid #3a3a50 !important;
+    border-radius: 8px !important; /* More rounded */
+    color: var(--color-text-light) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 53px !important; /* Adjusted height */
+    top: 1px !important;
+    right: 8px !important; /* Adjusted position */
+}
+
+.select2-dropdown {
+    background-color: var(--color-dark-bg) !important;
+    border: 1px solid var(--color-primary) !important;
+    border-radius: 8px !important; /* Rounded dropdown */
+}
+
+.select2-results__option {
+    color: var(--color-text-light) !important;
+    padding: 0.8rem 1rem !important; /* Larger padding */
+}
+
+.select2-results__option--highlighted {
+    background-color: var(--color-secondary) !important;
+    color: var(--color-dark-bg) !important;
+}
+
+.select2-search__field {
+    background-color: #2a2a3e !important;
+    color: var(--color-text-light) !important;
+    border: 1px solid #3a3a50 !important;
+    border-radius: 8px !important; /* Rounded search field */
+}
+
+/* Footer */
+footer {
+    background-color: var(--color-dark-bg);
+    color: var(--color-text-light);
+    padding: 4rem 1rem; /* Increased padding */
+    text-align: center;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.3); /* Stronger shadow */
+}
+
+.footer-section h3 {
+    color: var(--color-primary);
+    margin-bottom: 1.2rem; /* Increased margin */
+    font-size: 1.5rem;
+}
+
+.social-links a {
+    display: inline-block;
+    margin-right: 1.2rem; /* Increased margin */
+    font-size: 2rem; /* Larger icons */
+    color: var(--color-text-light);
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--color-primary);
+    transform: translateY(-3px); /* Lift on hover */
+}
+
+.footer-bottom {
+    margin-top: 2.5rem; /* Increased margin */
+    padding-top: 1.5rem; /* Increased padding */
+    border-top: 1px solid #3a3a50;
+    font-size: 1rem; /* Slightly larger font */
+    color: #999; /* Lighter color */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 3rem; /* Adjusted for smaller screens */
+    }
+
+    .hero-content p {
+        font-size: 1.5rem; /* Adjusted for smaller screens */
+    }
+
+    .btn {
+        padding: 0.8rem 1.5rem; /* Adjusted for smaller screens */
+    }
+
+    .card {
+        flex: 0 0 90%; /* Wider cards on small screens */
+        margin: 0 auto; /* Center cards */
+    }
+
+    .modal-content {
+        margin: 5% auto; /* Adjusted margin for smaller screens */
+    }
+}
+
 
 /* About Section */
 #about {
@@ -162,6 +551,46 @@ section.visible {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+}
+
+/* Testimonials Section */
+#testimonials {
+    background-color: var(--color-dark-bg);
+    padding: 3rem 1rem;
+}
+
+.testimonials-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background-color: var(--color-dark-alt);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0,255,247,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0,255,247,0.4);
+}
+
+.testimonial-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    color: var(--color-text-light);
+}
+
+.testimonial-author {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-align: right;
 }
 
 .btn {
