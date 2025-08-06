@@ -98,8 +98,8 @@ section.visible {
     align-items: center;
     justify-content: center;
     text-align: center;
-    min-height: 40vh; /* Even more reduced height */
-    padding: 4rem 1rem; /* Adjusted padding */
+    min-height: 40vh;
+    padding: 4rem 1rem;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
@@ -260,18 +260,28 @@ section.visible {
     border-color: var(--color-primary);
 }
 
+.project-carousel-wrapper {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scroll-snap-type: x mandatory; /* Snap to cards */
+    padding-bottom: 1rem; /* Space for scrollbar */
+}
+
 .project-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex; /* Use flexbox for horizontal layout */
     gap: 1.5rem;
+    padding: 0.5rem; /* Padding around cards */
+    scroll-snap-align: start;
 }
 
 .card {
+    flex: 0 0 300px; /* Fixed width for cards, prevent shrinking */
     background-color: var(--color-dark-bg);
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     padding: 1.5rem;
     transition: transform 0.3s;
+    scroll-snap-align: start; /* Snap individual cards */
 }
 
 .card:hover {
@@ -299,28 +309,7 @@ section.visible {
     margin-top: 1rem;
 }
 
-#show-more-btn {
-    display: block;
-    margin: 2rem auto 0;
-    background-color: var(--color-primary);
-    color: var(--color-dark-bg);
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#show-more-btn:hover {
-    background-color: var(--color-secondary);
-}
-
-#remaining-projects-text {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--color-text-light);
-}
+/* Removed #show-more-btn and #remaining-projects-text styles */
 
 /* Contact Form & Booking Form */
 #contact, #contact-form, #booking-form, #add-college-form {
