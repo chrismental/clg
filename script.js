@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${project.title}</h3>
                 <p class="category">${project.category}</p>
                 <p>${project.description.substring(0, 100)}...</p>
-                <button class="learn-more-btn">BUY NOW</button>
+                <button class="learn-more-btn">Buy Now</button>
                 <p><b>Price: &#8377;4500</b></p>
             `;
             card.querySelector('.learn-more-btn').addEventListener('click', () => openProjectModal(project));
