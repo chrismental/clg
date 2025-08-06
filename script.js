@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h3>${project.title}</h3>
                 <p class="category">${project.category}</p>
                 <p>${project.description.substring(0, 100)}...</p>
-                <button class="learn-more-btn">Buy Now</button>
+                <button class="learn-more-btn">View Details</button>
                 <p><b>Price: &#8377;4500</b></p>
             `;
             card.querySelector('.learn-more-btn').addEventListener('click', () => openProjectModal(project));
@@ -469,16 +469,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- FADE-IN ANIMATION --- //
-    const sections = document.querySelectorAll('section');
+    const animatedElements = document.querySelectorAll('section, .about-photo-container');
+
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                if (entry.target.tagName === 'SECTION') {
+                    entry.target.classList.add('animate-slide-in-up');
+                } else if (entry.target.classList.contains('about-photo-container')) {
+                    entry.target.querySelector('.about-photo').classList.add('animate-scale-in');
+                }
+            } else {
+                // Optional: remove classes if you want the animation to replay on scroll up
+                // entry.target.classList.remove('visible', 'animate-slide-in-up', 'animate-scale-in');
             }
         });
     }, { threshold: 0.1 });
 
-    sections.forEach(section => observer.observe(section));
+    animatedElements.forEach(element => observer.observe(element));
 
     renderProjects();
 });
